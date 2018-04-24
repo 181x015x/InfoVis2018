@@ -105,7 +105,7 @@ function main()
         var intersects = raycaster.intersectObject( cube );
         if ( intersects.length > 0 )
         {
-            intersects[0].face.color.setRGB( 1, 0, 0 );
+            intersects[0].face.color.setRGB( 1, 1, 0 );
             intersects[0].object.geometry.colorsNeedUpdate = true;
         }
     }
@@ -115,7 +115,7 @@ function main()
     function loop()
     {
         requestAnimationFrame( loop );
-        cube.rotation.x += 0.003;
+        cube.rotation.x += 0.05;
         cube.rotation.y += 0.001;
         renderer.render( scene, camera );
     }
