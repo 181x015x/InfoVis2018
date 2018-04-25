@@ -26,9 +26,7 @@ function main()
         vertexColors: THREE.VertexColors,
         vertexShader: document.getElementById('gouraud.vert').text,
         fragmentShader: document.getElementById('gouraud.frag').text,
-        uniforms: {
-            light_position: {type: 'v3', value: light.position}
-        }
+
     });
     var torus_knot = new THREE.Mesh( geometry, material );
     scene.add( torus_knot );
