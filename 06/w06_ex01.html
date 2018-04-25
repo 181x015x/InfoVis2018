@@ -5,8 +5,11 @@
     <body>
 	<script src="https://threejs.org/build/three.min.js"></script>
 	<script src="main01.js"></script>
-	<script>
-	 main();
+	<script type = "x-shader/x-fragment" id = "gouraud.frag">
+	varying vec3 point_color;
+	 main(){
+	 gl_FragColor = vec4(point_color, 1.0);
+	 }
 	</script>
     </body>
 </html>
