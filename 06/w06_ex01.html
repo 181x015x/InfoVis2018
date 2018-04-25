@@ -28,7 +28,7 @@
 	 vec3 L = normalize(light_position - point_position.xyz);
 	 vec3 N = normalize(normal_vector);
 	 point_color = LambertianReflection(C,L,N);
-	 gl_Postion = projectionMatrix * point_position;
+	 gl_Position = projectionMatrix * point_position;
 	 }
 	</script>
 	    
