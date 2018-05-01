@@ -80,7 +80,16 @@ function main()
     material.vertexColors = THREE.FaceColors;
     for ( var i = 0; i < nfaces; i++ )
     {
-        geometry.faces[i].color = new THREE.Color( 1, 1, 1 );
+        var id = faces[i];
+        var S0 = Math.floor((255 / 0.7) * (scalars[ id[0]] - 0.1));
+        var S1 = Math.floor((255 / 0.7) * (scalars[ id[1]] - 0.1));
+        var S2 = Math.floor((255 / 0.7) * (scalars[ id[2]] - 0.1));
+        var C0 = new THREE.Color().setHex( cmap[ S0 ][1] );
+        var C1 = new THREE.Color().setHex( cmap[ S1 ][1] );
+        var C2 = new THREE.Color().setHex( cmap[ S2 ][1] );
+        geometry.faces[i].vertexColors.push( C0 );
+        geometry.faces[i].vertexColors.push( C1 );
+        geometry.faces[i].vertexColors.push( C2 );
     }
 
     var triangle = new THREE.Mesh( geometry, material );
