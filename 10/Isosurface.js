@@ -113,3 +113,4 @@ function Isosurfaces( volume, isovalue )
         return new THREE.Vector3().addVectors( v0, v1 ).divideScalar( 2 );
     }
 }
+
