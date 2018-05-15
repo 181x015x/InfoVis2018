@@ -119,8 +119,22 @@ function Isosurfaces( volume, isovalue )
         return index;
     }
 
-    function interpolated_vertex( v0, v1, s )
-    {
-        return new THREE.Vector3().addVectors( v0, v1 ).divideScalar( 2 );
-    }
+   function interpolated_vertex( v0, v1, s ){
+        var lines = volume.resolution.x;
+        var slices = volume.resolution.x * volume.resolution.y;
+
+         var id0 = v0.x + v0.y * lines + v0.z * slices;
+         var id1 = v1.x + v1.y * lines + v1.z * slices;
+
+         var s0 = volume.values[id0][0];
+         var s1 = volume.values[id1][0];
+            if(s0 != s1){
+         var a = (s - s0) / (s1 - s0);
+         var x = v0.x * ( 1 - a ) + v1.x * a;
+         var y = v0.y * ( 1 - a ) + v1.y * a;
+         var z = v0.z * ( 1 - a ) + v1.z * a;
+        return new THREE.Vector3(x,y,z);
+            }
+            return new THREE.Vector3().addVectors( v0, v1 ).divideScalar( 2 );
+        }
 }
