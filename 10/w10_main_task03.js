@@ -11,6 +11,9 @@ function main()
 
     var bounds = Bounds( volume );
     screen.scene.add( bounds );
+    var light = new THREE.PointLight();
+    light.position.set( 105, 105, 105 );
+    screen.light = light;
 
     var isovalue = 128;
     var surfaces = Isosurfaces( volume, isovalue );
