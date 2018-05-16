@@ -72,7 +72,6 @@ function Isosurfaces( volume, isovalue )
         cmap.push( [ S, '0x' + color.getHexString() ] );
     }
 
-   // material.color = new THREE.Color().setHex( cmap[isovalue][1] );
     
      var material = new THREE.ShaderMaterial({
         vertexColors: THREE.VertexColors,
