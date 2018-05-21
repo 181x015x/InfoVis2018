@@ -1,4 +1,4 @@
-function Isosurfaces( volume, isovalue )
+function Isosurfaces( volume, isovalue , light )
 {
     var geometry = new THREE.Geometry();
 
@@ -6,6 +6,16 @@ function Isosurfaces( volume, isovalue )
     var smax = volume.max_value;
     isovalue = KVS.Clamp( isovalue, smin, smax );
 
+    var cmap = [];
+    for ( var i = 0; i < 256; i++ )
+    {
+        var S = i / 255.0; // [0,1]
+        var R = Math.max( 1 );
+        var G = Math.max( 1 - S , 0.0);
+        var B = Math.max( 1 - S, 0.0 ) ;
+        var color = new THREE.Color( R, G, B );
+        cmap.push( [ S, '0x' + color.getHexString() ] );
+    }
     var lut = new KVS.MarchingCubesTable();
     var cell_index = 0;
     var counter = 0;
@@ -61,18 +71,7 @@ function Isosurfaces( volume, isovalue )
 
     geometry.computeVertexNormals();
 
-    var cmap = [];
-    for ( var i = 0; i < 256; i++ )
-    {
-        var S = i / 255.0; // [0,1]
-        var R = Math.max( 1 );
-        var G = Math.max( 1 - S , 0.0);
-        var B = Math.max( 1 - S, 0.0 ) ;
-        var color = new THREE.Color( R, G, B );
-        cmap.push( [ S, '0x' + color.getHexString() ] );
-    }
-
-    
+ 
      var material = new THREE.ShaderMaterial({
         vertexColors: THREE.VertexColors,
         vertexShader: document.
@@ -82,6 +81,7 @@ function Isosurfaces( volume, isovalue )
         light_position: { type: 'v3', value: light.position } 
         }
     });
+    
 
     return new THREE.Mesh( geometry, material );
 
@@ -127,7 +127,7 @@ function Isosurfaces( volume, isovalue )
         return index;
     }
 
-   function interpolated_vertex( v0, v1, s ){
+    function interpolated_vertex( v0, v1, s ){
         var lines = volume.resolution.x;
         var slices = volume.resolution.x * volume.resolution.y;
 
