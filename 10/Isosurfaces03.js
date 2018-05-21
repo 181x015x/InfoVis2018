@@ -6,16 +6,7 @@ function Isosurfaces( volume, isovalue , light )
     var smax = volume.max_value;
     isovalue = KVS.Clamp( isovalue, smin, smax );
 
-    var cmap = [];
-    for ( var i = 0; i < 256; i++ )
-    {
-        var S = i / 255.0; // [0,1]
-        var R = Math.max( 1 );
-        var G = Math.max( 1 - S , 0.0);
-        var B = Math.max( 1 - S, 0.0 ) ;
-        var color = new THREE.Color( R, G, B );
-        cmap.push( [ S, '0x' + color.getHexString() ] );
-    }
+    
     var lut = new KVS.MarchingCubesTable();
     var cell_index = 0;
     var counter = 0;
@@ -71,6 +62,17 @@ function Isosurfaces( volume, isovalue , light )
 
     geometry.computeVertexNormals();
 
+    
+    var cmap = [];
+    for ( var i = 0; i < 256; i++ )
+    {
+        var S = i / 255.0; // [0,1]
+        var R = Math.max( 1 );
+        var G = Math.max( 1 - S , 0.0);
+        var B = Math.max( 1 - S, 0.0 ) ;
+        var color = new THREE.Color( R, G, B );
+        cmap.push( [ S, '0x' + color.getHexString() ] );
+    }
  
      var material = new THREE.ShaderMaterial({
         vertexColors: THREE.VertexColors,
