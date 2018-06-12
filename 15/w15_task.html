@@ -1,7 +1,61 @@
 <html>
     <head>
+	<meta charset="utf-8"/>
 	<title>W15: task  </title>
     </head>
+	<body style="margin:0">
+    <div id="display" style="width: 80%; height:90%;float: left;">
+    </div>
+    <div id="controller" style="width:20%; float:left;"align="center">
+      <b>Controller</b>
+      <br>
+      <br>
+      <label id="label" style="font-family:Arial;"></label>
+      <input type="range" min="0" max="1" step="0.01" value="0.5" id="isovalue"/>
+      <button id="change-isovalue-button" style="font-family=Arial;color:#000000">Apply</button>  
+<br><br>shading<br>
+      <button id="shading-Gouraud-button" style="font-family=Arial;">Gouraud</button>
+      <button id="shading-Phone-button" style="font-family=Arial;">Phone</button>
+      <br>
+      <br>
+      slice this robstar 
+      <br> 
+       direction
+      <br>
+       <label id="x_label" style="font-family:Arial;"></label>
+     <input type="range" min="0" max="1" step="0.5" value="0" id="x"/>
+      <br>
+      <label id="y_label" style="font-family:Arial;"></label>
+     <input type="range" min="0" max="1" step="0.5" value="0" id="y"/>
+       <br>
+     <label id="z_label" style="font-family:Arial;"></label>
+     <input type="range" min="0" max="1" step="0.5" value="1" id="z"/>
+       <br>
+      <button id="Slice-button" style="font-family=Arial;">Slice</button>
+      <br>
+      <br>
+      <div align="center">set color</div>
+      <label id="color_map" style="font-family:Arial;"></label>
+      <input type="range" min="0" max="1" step="0.05" value="0.5" id="phase_difference"/>
+      <br>
+      <div id="myGraph" align="center"></div>
+      <br>
+      <div align="center">Color Map</div>
+       <br>
+       <div align="center">
+       <textarea id="detail" cols="10" rows="10" style="width: 84%; height:9%;"disabled></textarea>
+       <br> color detail
+       </div>
+          <br>
+           <br>
+      Status
+      <br>
+      <textarea id="situation" cols="10" rows="30" style="width: 100%; height:10%;"disabled></textarea>
+      <br>
+      <button id="Return-to-original" style="font-family=Arial;">Return to Original</button>
+    </div>
+    <div id="color" style="width: 80%; height:10% ;float: left;">
+    </div>
     <body style="margin:0">
 	<script src="three.min.js"></script>
 	<script src="TrackballControls.js"></script>
