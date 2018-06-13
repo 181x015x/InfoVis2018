@@ -90,7 +90,7 @@ function main()
         nowcolor = nowcolor.slice(2); 
         nowcolor = "#"+nowcolor;
         document.getElementById('label').innerHTML = "Isovalue: " + Math.round( isovalue );
-        document.getElementById('change-isovalue-button').style.color = nowcolor;
+        
         
         
         var line = KVS.ToTHREELine( box.exec( volume ) );
