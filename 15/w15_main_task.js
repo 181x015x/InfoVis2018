@@ -116,24 +116,7 @@ function main()
                 document.getElementById('change-isovalue-button').style.color = nowcolor;
                 document.getElementById('label').innerHTML = "Isovalue: " + Math.round( isovalue );
             });
-         document.getElementById('x')
-            .addEventListener('mousemove', function() {
-                var value = +document.getElementById('x').value;
-                var x = parseInt(KVS.Mix( 0, 100, value ));
-                document.getElementById('x_label').innerHTML = "x: " +  x ;
-            });
-            document.getElementById('y')
-            .addEventListener('mousemove', function() {
-                var value = +document.getElementById('y').value;
-                var y = parseInt(KVS.Mix( 0, 100, value ));
-                document.getElementById('y_label').innerHTML = "y: " +  y;
-            });
-             document.getElementById('z')
-            .addEventListener('mousemove', function() {
-                var value = +document.getElementById('z').value;
-                var z = parseInt(KVS.Mix( 0, 100, value ));
-                document.getElementById('z_label').innerHTML = "z: " +  z;
-            });
+         
             document.getElementById('phase_difference')
             .addEventListener('mousemove', function() {
                 var value = +document.getElementById('phase_difference').value;
@@ -359,41 +342,7 @@ document.getElementById('Return-to-original')
                     renderer.render( scene, camera );
                     document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : Isovalue mode \nshading : none \n slice : none \n slice direction : none";
  });
-//_____________________________________________________________________
-//Sliceボタンが押された時
-document.getElementById('Slice-button')
-            .addEventListener('click', function() {
-                now_implement = 4;
-                screen.scene.remove( mesh );
-                var value = +document.getElementById('x').value;
-                var x = KVS.Mix( 0, 100, value );
-                value = +document.getElementById('y').value;
-                var y = KVS.Mix( 0, 100 , value );
-                value = +document.getElementById('z').value;
-                var z = KVS.Mix( 0, 100 , value );
-                if(x == 0 && y == 0 && z == 0){
-                    window.alert("Can`t slice in this parameter");
-                    screen.scene.add(mesh);
-                }
-                else{
-                    pre_direction = [x,y,z];
-                    value = +document.getElementById('isovalue').value;
-                    var isovalue = KVS.Mix( smin, smax, value );
-                    isosurface = new KVS.Isosurface();
-                    isosurface.setIsovalue( isovalue );
-                    mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
-                    var point = new THREE.Vector3(60,60,17);
-                    var normal = new THREE.Vector3(x,y,z);
-                    var value = +document.getElementById('phase_difference').value;  
-                var differ = KVS.Mix( 0, 100 , value ) / 100;
-                    mesh = SlicePlane(volume,point,normal,differ);
-                    screen.scene.add( mesh );
-                    document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : Slice mode \nshading : none \n slice : on \n slice direction : ( "+x+" , "+y+" , "+z+" )";
-                }
-
- });
-
-//_____________________________________________________________________
+//____________________________________________________________________________________________________________________________
 //マウスが動いた時の挙動
         document.addEventListener( 'mousemove', function() {
             screen.light.position.copy( screen.camera.position );
