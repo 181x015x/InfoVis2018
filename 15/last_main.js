@@ -307,91 +307,10 @@ document.getElementById('shading-Gouraud-button')
  });
 //_____________________________________________________________________
 //もとどおりにするのボタンが押された時
-document.getElementById('Return-to-original')
-            .addEventListener('click', function() {
-                now_implement = 0;
-                 screen.scene.remove( mesh );
-                isovalue = parseInt(KVS.Mix( smin, smax, 0.5 ));
-                x = 0;
-                y = 0;
-                z = 100;
-                differ_100 = 50;
-                differ = 0.5;
-                 display_color_data(differ);
-                isosurface = new KVS.Isosurface();
-                isosurface.setIsovalue( isovalue );
-                mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
-                screen.scene.add( mesh );
-                cmap = get_cmap(differ);
-                nowcolor = cmap[parseInt(isovalue)][1];
-                nowcolor = nowcolor.slice(2); 
-                nowcolor = "#"+nowcolor;
-                document.getElementById('change-isovalue-button').style.color = nowcolor;
-                document.getElementById('isovalue').value = 0.5;
-                document.getElementById('x').value = 0;
-                document.getElementById('y').value = 0;
-                document.getElementById('z').value = 1;
-                document.getElementById('phase_difference').value = 0.5;
-                document.getElementById('label').innerHTML = "Isovalue: " + Math.round( isovalue );
-                document.getElementById('x_label').innerHTML = "x: " +  x ;
-                document.getElementById('y_label').innerHTML = "y: " +  y ;
-                document.getElementById('z_label').innerHTML = "z: " +  z ;
-                scene.remove(colormap);
-                var cmap = [];
-                   for ( var i = 0; i < 256; i++ )
-                     {
-                        var S = i / 255.0; // [0,1]
-                        var R = Math.max( Math.cos( ( S - 1 ) * Math.PI ), 0.0 );
-                        var G = Math.max( Math.cos( ( S - 0.5 ) * Math.PI ), 0.0 );
-                        var B = Math.max( Math.cos( S * Math.PI ), 0.0 );
-                        var color = new THREE.Color( R, G, B );
-                        cmap.push( [ S, '0x' + color.getHexString() ] );
-                    }
-                            var lut = new THREE.Lut( 'rainbow', cmap.length );
-                    lut.addColorMap( 'mycolormap', cmap );
-                      lut.changeColorMap( 'mycolormap' );
-                     colormap = lut.setLegendOn( {
-                        'layout':'horizontal',
-                        'position': { 'x': 0, 'y': 0, 'z': 0.5 },
-                        'dimensions': { 'width': 10, 'height': 1.2 }
-                        } ) ;
-                    scene.add(colormap);
-                    renderer.render( scene, camera );
-                    document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : Isovalue mode \nshading : none \n slice : none \n slice direction : none";
- });
+
 //_____________________________________________________________________
 //Sliceボタンが押された時
-document.getElementById('Slice-button')
-            .addEventListener('click', function() {
-                now_implement = 4;
-                screen.scene.remove( mesh );
-                var value = +document.getElementById('x').value;
-                var x = KVS.Mix( 0, 100, value );
-                value = +document.getElementById('y').value;
-                var y = KVS.Mix( 0, 100 , value );
-                value = +document.getElementById('z').value;
-                var z = KVS.Mix( 0, 100 , value );
-                if(x == 0 && y == 0 && z == 0){
-                    window.alert("Can`t slice in this parameter");
-                    screen.scene.add(mesh);
-                }
-                else{
-                    pre_direction = [x,y,z];
-                    value = +document.getElementById('isovalue').value;
-                    var isovalue = KVS.Mix( smin, smax, value );
-                    isosurface = new KVS.Isosurface();
-                    isosurface.setIsovalue( isovalue );
-                    mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
-                    var point = new THREE.Vector3(60,60,17);
-                    var normal = new THREE.Vector3(x,y,z);
-                    var value = +document.getElementById('phase_difference').value;  
-                var differ = KVS.Mix( 0, 100 , value ) / 100;
-                    mesh = SlicePlane(volume,point,normal,differ);
-                    screen.scene.add( mesh );
-                    document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : Slice mode \nshading : none \n slice : on \n slice direction : ( "+x+" , "+y+" , "+z+" )";
-                }
 
- });
 
 //_____________________________________________________________________
 //マウスが動いた時の挙動
