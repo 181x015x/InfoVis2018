@@ -1,0 +1,150 @@
+<html>
+
+  <head>
+    <meta charset="utf-8"/>
+    <title>finaltask</title>
+  </head>
+
+  <body style="margin:0">
+    <div id="display" style="width: 80%; height:90%;float: left;">
+    </div>
+    <div id="controller" style="width:20%; float:left;"align="center">
+      <b>Controller</b>
+      <br>
+      <br>
+      <label id="label" style="font-family:Arial;"></label>
+      <input type="range" min="0" max="1" step="0.01" value="0.5" id="isovalue"/>
+      <button id="change-isovalue-button" style="font-family=Arial;color:#000000">Apply</button>  
+<br><br>shading<br>
+      <button id="shading-Gouraud-button" style="font-family=Arial;">Gouraud</button>
+      <button id="shading-Phone-button" style="font-family=Arial;">Phone</button>
+      <br>
+      <br>
+      slice this robstar 
+      <br> 
+       direction
+      <br>
+       <label id="x_label" style="font-family:Arial;"></label>
+     <input type="range" min="0" max="1" step="0.5" value="0" id="x"/>
+      <br>
+      <label id="y_label" style="font-family:Arial;"></label>
+     <input type="range" min="0" max="1" step="0.5" value="0" id="y"/>
+       <br>
+     <label id="z_label" style="font-family:Arial;"></label>
+     <input type="range" min="0" max="1" step="0.5" value="1" id="z"/>
+       <br>
+      <button id="Slice-button" style="font-family=Arial;">Slice</button>
+      <br>
+      <br>
+      <div align="center">set color</div>
+      <label id="color_map" style="font-family:Arial;"></label>
+      <input type="range" min="0" max="1" step="0.05" value="0.5" id="phase_difference"/>
+      <br>
+      <div id="myGraph" align="center"></div>
+      <br>
+      <div align="center">Color Map</div>
+       <br>
+       <div align="center">
+       <textarea id="detail" cols="10" rows="10" style="width: 84%; height:9%;"disabled></textarea>
+       <br> color detail
+       </div>
+          <br>
+           <br>
+      Status
+      <br>
+      <textarea id="situation" cols="10" rows="30" style="width: 100%; height:10%;"disabled></textarea>
+      <br>
+      <button id="Return-to-original" style="font-family=Arial;">Return to Original</button>
+    </div>
+    <div id="color" style="width: 80%; height:10% ;float: left;">
+    </div>
+    <script src="three.min.js"></script>
+    <script src="TrackballControls.js"></script>
+    <script src="https://naohisas.github.io/KVS.js/Build/KVS.min.js"></script>
+    <script src="https://naohisas.github.io/KVS.js/Build/KVS2THREE.min.js"></script>
+    <script src="https://naohisas.github.io/KVS.js/Source/KVSLobsterData.js"></script>
+    <script src="KVSSingleCubeData.js"></script>
+    <script src="w15_main_task.js"></script>
+    <script src="https://threejs.org/examples/js/math/Lut.js"></script>
+    <script src="SlicePlane.js"></script>
+    <script src="d3.v3.min.js" charset="utf-8"></script>
+    <script src = "display_color_data.js"></script>
+    <script type="x-shader/x-vertex" id="phone.vert">
+  varying vec3 point_color;
+  varying vec4 point_position;
+  varying vec3 normal_vector;
+  uniform vec3 light_position;
+  vec3 PhongReflection( vec3 C, vec3 L, vec3 N,vec3 V )
+  {
+  float ka = 0.3; 
+  float kd = 0.5; 
+  float ks = 0.8; 
+  float n = 50.0;
+  vec3 R = reflect( -L, N );
+  float dd = max( dot( N, L ), 0.0 );
+  float ds = pow( max( dot( R, V ), 0.0 ), n );   
+  if ( dd <= 0.0 ) { ds = 0.0;}
+  float Ia = ka;
+  float Id = kd * dd;
+  float Is = ks * ds;
+  return C * ( Ia + Id + Is );
+}
+
+   void main()
+   {
+    point_position = modelViewMatrix * vec4( position, 1.0 ); 
+    normal_vector = normalMatrix * normal;
+    vec3 C = color;
+    vec3 L = normalize( light_position - point_position.xyz );
+    vec3 N = normalize( normal_vector );
+    vec3 V = normalize( -point_position.xyz);
+    point_color = PhongReflection( C, L, N, V );
+      gl_Position = projectionMatrix * point_position;
+   }
+  </script>
+  <script type="x-shader/x-fragment" id="phone.frag">
+  varying vec3 point_color;
+   void main()
+   {
+       gl_FragColor = vec4( point_color, 1.0 );
+   }
+  </script>
+    <script type="x-shader/x-vertex" id="gouraud.vert">
+  varying vec3 point_color;
+  varying vec4 point_position;
+  varying vec3 normal_vector;
+  uniform vec3 light_position;
+vec3 LambertianReflection( vec3 C, vec3 L, vec3 N )
+{
+  float ka = 0.4; 
+  float kd = 0.6;
+  float dd = max( dot(N,L),0.0);
+  float Ia = ka;
+  float Id = kd * dd;
+  return C * (Ia + Id);
+}
+
+   void main()
+   {
+    point_position = modelViewMatrix * vec4( position, 1.0 ); 
+    normal_vector = normalMatrix * normal;
+    vec3 C = color;
+    vec3 L = normalize( light_position - point_position.xyz ); 
+    vec3 N = normalize( normal_vector );
+    point_color = LambertianReflection( C, L, N );
+      gl_Position = projectionMatrix * point_position;
+   }
+  </script>
+
+  <script type="x-shader/x-fragment" id="gouraud.frag">
+  varying vec3 point_color;
+   void main()
+   {
+       gl_FragColor = vec4( point_color, 1.0 );
+   }
+  </script>
+    <script>main()</script>
+  </body>
+
+</html>
+
