@@ -115,12 +115,7 @@ function main()
                 document.getElementById('change-isovalue-button').style.color = nowcolor;
                 document.getElementById('label').innerHTML = "Isovalue: " + Math.round( isovalue );
             });
-         document.getElementById('x')
-            .addEventListener('mousemove', function() {
-                var value = +document.getElementById('x').value;
-                var x = parseInt(KVS.Mix( 0, 100, value ));
-                document.getElementById('x_label').innerHTML = "x: " +  x ;
-            });
+        
             document.getElementById('y')
             .addEventListener('mousemove', function() {
                 var value = +document.getElementById('y').value;
