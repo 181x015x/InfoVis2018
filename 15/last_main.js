@@ -89,6 +89,7 @@ function main()
         nowcolor = cmap[parseInt(isovalue)][1];
         nowcolor = nowcolor.slice(2); 
         nowcolor = "#"+nowcolor;
+        document.getElementById('label').innerHTML = "Isovalue: " + Math.round( isovalue );
         
         var line = KVS.ToTHREELine( box.exec( volume ) );
         mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
