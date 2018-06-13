@@ -98,8 +98,7 @@ function main()
         mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
         screen.scene.add( line );//箱の枠
         screen.scene.add( mesh );//ロブスター
-        //現在の状態表示
-        document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : Isovalue mode \nshading : none \n slice : none \n slice direction : none";
+        
 //________________________________________________________________
 //動かすタイプの入力ボックスの設定
         document.getElementById('isovalue')
