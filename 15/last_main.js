@@ -91,13 +91,13 @@ function main()
         nowcolor = "#"+nowcolor;
         document.getElementById('label').innerHTML = "Isovalue: " + Math.round( isovalue );
         document.getElementById('change-isovalue-button').style.color = nowcolor;
-        document.getElementById('x_label').innerHTML = "x: " + x;
-        document.getElementById('y_label').innerHTML = "y: " + y;
-        document.getElementById('z_label').innerHTML = "z: " + z;
+        
+        
         var line = KVS.ToTHREELine( box.exec( volume ) );
         mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
         screen.scene.add( line );//箱の枠
         screen.scene.add( mesh );//ロブスター
+        
         
 //________________________________________________________________
 //動かすタイプの入力ボックスの設定
