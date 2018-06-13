@@ -15,7 +15,7 @@ for ( var i = 0; i < 256; i++ )
         list3.push(B);
         center.push(0);
     }
-    document.getElementById('detail').innerHTML = "R : max ( cos( ( x - "+differ_2+" ) * π　), 0 )\nG : max ( cos( ( x - "+differ+" ) * π　), 0 )\nB : max ( cos( ( x ) * π　), 0 )\n"
+    
 var svgWidth = window.innerWidth * 0.1; // SVG領域の横幅
 var svgHeight = window.innerHeight * 0.1;    // SVG領域の縦幅
 //ページの初期化
