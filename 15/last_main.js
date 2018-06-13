@@ -116,18 +116,7 @@ function main()
                 document.getElementById('label').innerHTML = "Isovalue: " + Math.round( isovalue );
             });
         
-            document.getElementById('y')
-            .addEventListener('mousemove', function() {
-                var value = +document.getElementById('y').value;
-                var y = parseInt(KVS.Mix( 0, 100, value ));
-                document.getElementById('y_label').innerHTML = "y: " +  y;
-            });
-             document.getElementById('z')
-            .addEventListener('mousemove', function() {
-                var value = +document.getElementById('z').value;
-                var z = parseInt(KVS.Mix( 0, 100, value ));
-                document.getElementById('z_label').innerHTML = "z: " +  z;
-            });
+            
             document.getElementById('phase_difference')
             .addEventListener('mousemove', function() {
                 var value = +document.getElementById('phase_difference').value;
@@ -179,7 +168,6 @@ function main()
                 material.color = new THREE.Color().setHex( cmap[isovalue][1] );
                 mesh = new THREE.Mesh( mesh.geometry, material);
                 screen.scene.add( mesh );
-                document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : Isovalue mode \nshading : none \n slice : none \n slice direction : none";
                 break;
             }
         case 1 : {
@@ -190,7 +178,6 @@ function main()
                 isosurface.setIsovalue( isovalue ); 
                 mesh = phoneshading(isosurface.exec( volume ),light,isovalue,differ);
                 screen.scene.add( mesh );
-                document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : shadding mode \nshading : Phone shading \n slice : none \n slice direction : none";
                 break;
             }
         case 2 : { 
@@ -201,7 +188,6 @@ function main()
                 isosurface.setIsovalue( isovalue ); 
                 mesh = Gouraudshading(isosurface.exec( volume ),light,isovalue,differ);
                 screen.scene.add( mesh );
-                document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : shadding mode \nshading : Gouraud shading \n slice : none \n slice direction : none";break;
                 break;
             }
         case 3 : {break;}
@@ -226,7 +212,7 @@ function main()
                 var differ = KVS.Mix( 0, 100 , value ) / 100;
                     mesh = SlicePlane(volume,point,normal,differ);
                     screen.scene.add( mesh );
-                    document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : Slice mode \nshading : none \n slice : on \n slice direction : ( "+x+" , "+y+" , "+z+" )";
+                    
                 }
                 break;
             }
@@ -263,7 +249,7 @@ function main()
                 material.color = new THREE.Color().setHex( cmap[isovalue][1] );
                 mesh = new THREE.Mesh( mesh.geometry, material);
                 screen.scene.add( mesh );
-                document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : Isovalue mode \nshading : none \n slice : none \n slice direction : none";
+                
             });
 //_____________________________________________________________________
 //phoneのボタンが押された時の挙動
@@ -280,7 +266,7 @@ document.getElementById('shading-Phone-button')
                 isosurface.setIsovalue( isovalue ); 
                 mesh = phoneshading(isosurface.exec( volume ),light,isovalue,differ);
                 screen.scene.add( mesh );
-                document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : shadding mode \nshading : Phone shading \n slice : none \n slice direction : none";
+                
  });
 //_____________________________________________________________________
 //gouraudのボタンが押された時
@@ -297,7 +283,7 @@ document.getElementById('shading-Gouraud-button')
                 var differ_2 = differ * 2;
                 mesh = Gouraudshading(isosurface.exec( volume ),light,isovalue,differ);
                 screen.scene.add( mesh );
-                document.getElementById('situation').innerHTML = "Isovalue = "+isovalue+" \ncolor in Isovalue = " + nowcolor + "\ndisplay : shadding mode \nshading : Gouraud shading \n slice : none \n slice direction : none";
+                
  });
 //_____________________________________________________________________
 //もとどおりにするのボタンが押された時
