@@ -1,10 +1,5 @@
 function main()
 {
-    //giometry : 幾何学　形にまつわるデータ　ex)辺、点、色
-    //volume : スカラー量
-    //isosurface : 等値面
-    //var volume = new KVS.SingleCubeData();
-    //var volume = new KVS.CreateHydrogenData( 64, 64, 64 );
     var volume = new KVS.LobsterData();
     var screen = new KVS.THREEScreen();
     var light = new THREE.PointLight();
@@ -26,7 +21,7 @@ function main()
     var cmap = [];
     for ( var i = 0; i < 256; i++ )
     {
-        var S = i / 255.0; // [0,1]
+        var S = i / 255.0; 
         var R = Math.max( Math.cos( ( S - 1 ) * Math.PI ), 0.0 );
         var G = Math.max( Math.cos( ( S - 0.5 ) * Math.PI ), 0.0 );
         var B = Math.max( Math.cos( S * Math.PI ), 0.0 );
@@ -45,27 +40,26 @@ function main()
     renderer.render( scene, camera );
 
     screen.init(volume, {
-      width: window.innerWidth * 0.8,    //全体の80パーセントの横
-      height: window.innerHeight * 0.9,         // 全体の縦
-      targetDom: document.getElementById('display'),　//id = display　を変更する。
+      width: window.innerWidth * 0.8, 
+      height: window.innerHeight * 0.9, 
+      targetDom: document.getElementById('display'),　
       enableAutoResize: false
     });
-    var now_implement = 0;// 0 : 元の状態　1 : phone shading 2: gouraud 3: slice 
+    var now_implement = 0;
        setup();
     screen.loop();
 
     function setup()
     {
-    //________________________________________________________________________
-    //初期設定
-        var color = new KVS.Vec3( 0, 0, 0 );　 //黒
-        var box = new KVS.BoundingBox();　// ロブスターを囲む箱を初期化
-        box.setColor( color );     //箱を黒に設定 
-        box.setWidth( 2 );      //箱の線の太さを設定
+    
+        var color = new KVS.Vec3( 0, 0, 0 );　 
+        var box = new KVS.BoundingBox();　
+        box.setColor( color );     
+        box.setWidth( 2 );      
 
-        var smin = volume.min_value;    // 0 
-        var smax = volume.max_value;    //255
-        var isovalue = parseInt(KVS.Mix( smin, smax, 0.5 )); //isovalue = (smin + smax )/2 = 255/2 = 127.5
+        var smin = volume.min_value;    
+        var smax = volume.max_value;    
+        var isovalue = parseInt(KVS.Mix( smin, smax, 0.5 )); 
         var x = 0;
         var y = 0;
         var z = 100;
@@ -78,7 +72,7 @@ function main()
         var nowcolor;
     for ( var i = 0; i < 256; i++ )
     {
-        var S = i / 255.0; // [0,1]
+        var S = i / 255.0; 
         var R = Math.max( Math.cos( ( S - 1 ) * Math.PI ), 0.0 );
         var G = Math.max( Math.cos( ( S - 0.5 ) * Math.PI ), 0.0 );
         var B = Math.max( Math.cos( S * Math.PI ), 0.0 );
@@ -93,12 +87,9 @@ function main()
         
         var line = KVS.ToTHREELine( box.exec( volume ) );
         mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
-        screen.scene.add( line );//箱の枠
-        screen.scene.add( mesh );//ロブスター
-        
-        
-//________________________________________________________________
-//動かすタイプの入力ボックスの設定
+        screen.scene.add( line );
+        screen.scene.add( mesh );
+
         document.getElementById('isovalue')
             .addEventListener('mousemove', function() {
                 var value = +document.getElementById('isovalue').value;
@@ -113,9 +104,8 @@ function main()
                 document.getElementById('change-isovalue-button').style.color = nowcolor;
                 document.getElementById('label').innerHTML = "Isovalue: " + Math.round( isovalue );
             });
-        
-            
-            document.getElementById('phase_difference')
+         
+        document.getElementById('phase_difference')
             .addEventListener('mousemove', function() {
                 var value = +document.getElementById('phase_difference').value;
                 differ_100 = parseInt(KVS.Mix( 0, 100, value ));
@@ -128,7 +118,7 @@ function main()
         var cmap = [];
         var value = +document.getElementById('isovalue').value;
         var isovalue = KVS.Mix( smin, smax, value );
-         cmap = get_cmap(differ);
+        cmap = get_cmap(differ);
         nowcolor = cmap[parseInt(isovalue)][1];
         nowcolor = nowcolor.slice(2); 
         nowcolor = "#"+nowcolor;
@@ -149,9 +139,9 @@ function main()
                 var value = +document.getElementById('isovalue').value;
                 var isovalue = parseInt(KVS.Mix( smin, smax, value ));
                 var isosurface = new KVS.Isosurface();
-                isosurface.setIsovalue( isovalue );                       //更新
+                isosurface.setIsovalue( isovalue );                       
                 mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
-                var material = new THREE.MeshLambertMaterial();// 処理？？
+                var material = new THREE.MeshLambertMaterial();
                 var cmap = [];
                 var differ_2 = differ * 2;
                 for ( var i = 0; i < 256; i++ )
@@ -215,11 +205,8 @@ function main()
                 break;
             }
      }
-               
-
             });
-//_____________________________________________________________________
-//isovalue変更のボタンが押された時の挙動
+
         document.getElementById('change-isovalue-button')
             .addEventListener('click', function() {
                 now_implement = 0;
@@ -227,9 +214,9 @@ function main()
                 var value = +document.getElementById('isovalue').value;
                 var isovalue = parseInt(KVS.Mix( smin, smax, value ));
                 var isosurface = new KVS.Isosurface();
-                isosurface.setIsovalue( isovalue );                       //更新
+                isosurface.setIsovalue( isovalue );                       
                 mesh = KVS.ToTHREEMesh( isosurface.exec( volume ) );
-                var material = new THREE.MeshLambertMaterial();// 処理？？
+                var material = new THREE.MeshLambertMaterial();
                 var cmap = [];
                 var value = +document.getElementById('phase_difference').value;  
             var differ = KVS.Mix( 0, 100 , value ) / 100;
@@ -237,7 +224,7 @@ function main()
                 var differ_2 = differ * 2;
                 for ( var i = 0; i < 256; i++ )
                 {
-                    var S = i / 255.0; // [0,1]
+                    var S = i / 255.0; 
                     var R = Math.max( Math.cos( ( S - differ_2 ) * Math.PI ), 0.0 );
                     var G = Math.max( Math.cos( ( S - differ ) * Math.PI ), 0.0 );
                     var B = Math.max( Math.cos( S * Math.PI ), 0.0 );
@@ -249,8 +236,7 @@ function main()
                 screen.scene.add( mesh );
                 
             });
-//_____________________________________________________________________
-//phoneのボタンが押された時の挙動
+
 document.getElementById('shading-Phone-button')
             .addEventListener('click', function() {
                 now_implement = 1;
@@ -263,11 +249,9 @@ document.getElementById('shading-Phone-button')
                 var differ_2 = differ * 2;
                 isosurface.setIsovalue( isovalue ); 
                 mesh = phoneshading(isosurface.exec( volume ),light,isovalue,differ);
-                screen.scene.add( mesh );
-                
+                screen.scene.add( mesh );            
  });
-//_____________________________________________________________________
-//gouraudのボタンが押された時
+
 document.getElementById('shading-Gouraud-button')
             .addEventListener('click', function() {
                 now_implement = 2;
@@ -280,40 +264,22 @@ document.getElementById('shading-Gouraud-button')
                 var differ = KVS.Mix( 0, 100 , value ) / 100;
                 var differ_2 = differ * 2;
                 mesh = Gouraudshading(isosurface.exec( volume ),light,isovalue,differ);
-                screen.scene.add( mesh );
-                
+                screen.scene.add( mesh );      
  });
-//_____________________________________________________________________
-//もとどおりにするのボタンが押された時
 
-//_____________________________________________________________________
-//Sliceボタンが押された時
-
-
-//_____________________________________________________________________
-//マウスが動いた時の挙動
         document.addEventListener( 'mousemove', function() {
             screen.light.position.copy( screen.camera.position );
         });
 
-
-
-//_____________________________________________________________________
-//リサイズする時の動き
         window.addEventListener('resize', function() {
             screen.resize([
                 window.innerWidth * 0.8,
                 window.innerHeight
             ]);
         });
-
         screen.draw();
     }
 
-
-
-//_____________________________________________________________________    
-//phoneshading実装
 function phoneshading(a,light,isovalue,differ) {
     isovalue = parseInt(isovalue);
     var c = new THREE.Geometry;
@@ -373,10 +339,8 @@ function phoneshading(a,light,isovalue,differ) {
     c.computeFaceNormals();
     c.computeVertexNormals();
 return new THREE.Mesh(c,f)
-
 }
-//_____________________________________________________________________    
-//Gouraudshading実装
+
 function Gouraudshading(a,light,isovalue,differ) {
     isovalue = parseInt(isovalue);
     var c = new THREE.Geometry;
